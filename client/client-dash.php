@@ -1,100 +1,71 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header('Location: ../../public/auth/login.php');
+if(!isset($_SESSION['user_id'])){
+    header("Location: ../../public/auth/login.php");
     exit();
 }
 
-include '../database/db-conn.php';
+include "../database/db-conn.php";
 
-$user_id = $_SESSION['user_id'];
-$query = "SELECT name FROM users WHERE id = ?";
-$stmt = mysqli_prepare($conn, $query);
-mysqli_stmt_bind_param($stmt, 'i', $user_id);
+// Get user's active listings
+$sql = "SELECT * FROM products WHERE seller_id = ? AND status = 'active' ORDER BY end_time ASC";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, 'i', $_SESSION['user_id']);
 mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-$user = mysqli_fetch_assoc($result);
+$listings = mysqli_stmt_get_result($stmt);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | NepBay</title>
+    <link rel="stylesheet" href="../../assets/main.css">
     <link rel="stylesheet" href="../../assets/client.css">
 </head>
 <body>
-    <header>
-        <h1>NepBay</h1>
-        <nav>
-            <ul>
-                <li><a href="client-dash.php">Dashboard</a></li>
-                <li><a href="listing/create.php">Create Listing</a></li>
-                <li><a href="listing/manage.php">Manage Listings</a></li>
-                <li><a href="bids/history.php">Bid History</a></li>
-                <li><a href="../../public/auth/logout.php">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="welcome">
-            <h2>Welcome, <?php echo htmlspecialchars($user['name']); ?>!</h2>
-            <p>What would you like to do today?</p>
-        </section>
+    <div class="header">
+        <div class="container">
+            <h1>NepBay</h1>
+            <nav>
+                <a href="client-dash.php">Dashboard</a>
+                <a href="listing/create.php">Create Listing</a>
+                <a href="../../public/auth/logout.php">Logout</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Welcome, <?= htmlspecialchars($_SESSION['user_name']) ?></h2>
         
-        <section class="actions">
+        <div class="card-grid">
             <div class="card">
                 <h3>Create New Listing</h3>
-                <p>Sell an item by listing it for auction</p>
-                <a href="listing/create.php" class="btn">Create Listing</a>
+                <p>Start selling your items</p>
+                <a href="listing/create.php" class="btn btn-blue">Create</a>
             </div>
             
             <div class="card">
-                <h3>Manage Listings</h3>
-                <p>View and edit your existing listings</p>
-                <a href="listing/manage.php" class="btn">Manage Listings</a>
+                <h3>My Listings</h3>
+                <p>Manage your auctions</p>
+                <a href="listing/manage.php" class="btn btn-blue">Manage</a>
             </div>
-            
-            <div class="card">
-                <h3>View Bids</h3>
-                <p>See your bidding history and status</p>
-                <a href="bids/history.php" class="btn">View Bids</a>
+        </div>
+
+        <h3>Active Listings</h3>
+        <?php if(mysqli_num_rows($listings) > 0): ?>
+            <div class="listing-grid">
+                <?php while($listing = mysqli_fetch_assoc($listings)): ?>
+                    <div class="listing-card">
+                        <img src="../../<?= $listing['image_path'] ?>" alt="<?= htmlspecialchars($listing['title']) ?>">
+                        <h4><?= htmlspecialchars($listing['title']) ?></h4>
+                        <p>Current: ₹<?= number_format($listing['current_price'], 2) ?></p>
+                        <p>Ends: <?= date('M d, Y H:i', strtotime($listing['end_time'])) ?></p>
+                        <a href="../public/view-au.php?id=<?= $listing['id'] ?>" class="btn btn-red">View</a>
+                    </div>
+                <?php endwhile; ?>
             </div>
-        </section>
-        
-        <section class="active-listings">
-            <h3>Your Active Listings</h3>
-            <?php
-            $query = "SELECT id, title, start_price, end_time, image_path 
-                      FROM products 
-                      WHERE seller_id = ? AND status = 'active'
-                      ORDER BY created_at DESC
-                      LIMIT 5";
-            $stmt = mysqli_prepare($conn, $query);
-            mysqli_stmt_bind_param($stmt, 'i', $user_id);
-            mysqli_stmt_execute($stmt);
-            $result = mysqli_stmt_get_result($stmt);
-            
-            if (mysqli_num_rows($result) > 0) {
-                while ($listing = mysqli_fetch_assoc($result)) {
-                    echo '<div class="listing">';
-                    echo '<img src="../../' . htmlspecialchars($listing['image_path']) . '" alt="' . htmlspecialchars($listing['title']) . '">';
-                    echo '<div class="details">';
-                    echo '<h4>' . htmlspecialchars($listing['title']) . '</h4>';
-                    echo '<p>Current Price: ₹' . number_format($listing['start_price'], 2) . '</p>';
-                    echo '<p>Ends: ' . date('M d, Y H:i', strtotime($listing['end_time'])) . '</p>';
-                    echo '<a href="listing/manage.php?product_id=' . $listing['id'] . '" class="btn">View Details</a>';
-                    echo '</div></div>';
-                }
-            } else {
-                echo '<p>You have no active listings. <a href="listing/create.php">Create one now!</a></p>';
-            }
-            ?>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2025 NepBay. All rights reserved.</p>
-    </footer>
+        <?php else: ?>
+            <p>You have no active listings.</p>
+        <?php endif; ?>
+    </div>
 </body>
 </html>
