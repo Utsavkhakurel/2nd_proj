@@ -6,12 +6,16 @@
   border-radius: 8px;
   box-shadow: 0 2px 20px rgba(0,0,0,0.1);
   border-top: 4px solid var(--primary-red);
+  justify-content: center;
+  align-items: center;
 }
 
 .auth-container h1 {
   text-align: center;
   color: var(--primary-blue);
   margin-bottom: 1.5rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .auth-links {

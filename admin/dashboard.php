@@ -26,8 +26,9 @@ $pending = mysqli_query($conn, "SELECT p.id, p.title, p.created_at, u.name AS se
 <html>
 <head>
     <title>Admin Dashboard | NepBay</title>
-    <link rel="stylesheet" href="../../assets/main.css">
-    <link rel="stylesheet" href="../../assets/admin.css">
+    <link rel="stylesheet" href="/Nepbay/assets/main.css">
+<link rel="stylesheet" href="/Nepbay/assets/admin.css">
+
 </head>
 <body>
     <div class="header">

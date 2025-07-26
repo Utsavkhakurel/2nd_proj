@@ -18,8 +18,9 @@ $listings = mysqli_stmt_get_result($stmt);
 <html>
 <head>
     <title>Dashboard | NepBay</title>
-    <link rel="stylesheet" href="../../assets/main.css">
-    <link rel="stylesheet" href="../../assets/client.css">
+    <link rel="stylesheet" href="/Nepbay/assets/main.css">
+<link rel="stylesheet" href="/Nepbay/assets/client.css">
+
 </head>
 <body>
     <div class="header">

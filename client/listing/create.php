@@ -36,8 +36,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($conn, $sql);
         $current_price = $start_price; // Initial current price
-        mysqli_stmt_bind_param($stmt, 'issdssi', $_SESSION['user_id'], $title, $description, $start_price, $current_price, $end_time, $image_path, $category_id);
-        
+        mysqli_stmt_bind_param($stmt, 'issdssss', $_SESSION['user_id'], $title, $description, $start_price, $current_price, $end_time, $image_path, $category_id);
         if(mysqli_stmt_execute($stmt)){
             header("Location: ../manage.php?success=Listing created successfully");
             exit();
@@ -54,8 +53,8 @@ $categories = mysqli_query($conn, "SELECT * FROM categories");
 <html>
 <head>
     <title>Create Listing | NepBay</title>
-    <link rel="stylesheet" href="../../../assets/main.css">
-    <link rel="stylesheet" href="../../../assets/client.css">
+    <link rel="stylesheet" href="/Nepbay/assets/main.css">
+<link rel="stylesheet" href="/Nepbay/assets/client.css">
 </head>
 <body>
     <div class="header">

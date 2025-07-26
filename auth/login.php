@@ -1,4 +1,4 @@
-//<?php
+<?php
 //session_start();
 //if(isset($_SESSION['user_id'])) {
   //  header("Location: ../client/client-dash.php");
@@ -26,9 +26,8 @@
     <div class="container">
         <div class="auth-container">
             <h1>Login</h1>
-            <?php if($error): ?>
-                <div class="alert" style="color: var(--primary-red);"><?= htmlspecialchars($error) ?></div>
-            <?php endif; ?>
+            
+            
             
             <form action="login-handle.php" method="POST">
                 <div class="form-group">

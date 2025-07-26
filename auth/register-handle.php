@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 
@@ -45,14 +46,10 @@ $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, "sss", $name, $email, $hashed_password);
 
 if (mysqli_stmt_execute($stmt)) {
-    $_SESSION['user_id'] = mysqli_insert_id($conn);
-    $_SESSION['user_name'] = $name;
-    $_SESSION['user_role'] = 'user';
-
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
-    
-    header("Location: ../client/client-dash.php");
+    // Redirect to login page with success message
+    header("Location: login.php?success=1");
     exit();
 } else {
     $error = urlencode("Registration failed: " . mysqli_error($conn));
@@ -61,3 +58,4 @@ if (mysqli_stmt_execute($stmt)) {
     header("Location: register.php?error=$error");
     exit();
 }
+?>
