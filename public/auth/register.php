@@ -9,7 +9,7 @@ if(isset($_SESSION['user_id'])){
 <html>
 <head>
     <title>Register | NepBay</title>
-    <link rel="stylesheet" href="../../assets/auth.css">
+    <link rel="stylesheet" href="../assets/auth.css">
 </head>
 <body>
     <div class="auth-container">

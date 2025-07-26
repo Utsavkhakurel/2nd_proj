@@ -98,6 +98,6 @@ $pending_listings = mysqli_query($conn, $query);
         </div>
     </main>
     
-    <?php include '../../includes/footer.php'; ?>
+    
 </body>
 </html>

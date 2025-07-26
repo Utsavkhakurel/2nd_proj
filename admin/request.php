@@ -99,6 +99,6 @@ $error = isset($_GET['error']) ? $_GET['error'] : '';
         <?php endif; ?>
     </main>
     
-    <?php include '../../includes/footer.php'; ?>
+    
 </body>
 </html>

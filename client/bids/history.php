@@ -59,6 +59,6 @@ $bids = mysqli_stmt_get_result($stmt);
         <?php endif; ?>
     </main>
     
-    <?php include '../../../includes/footer.php'; ?>
+    
 </body>
 </html>

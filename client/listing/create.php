@@ -136,6 +136,6 @@ while ($row = mysqli_fetch_assoc($cat_result)) {
         </form>
     </main>
     
-    <?php include '../../../includes/footer.php'; ?>
+    
 </body>
 </html>
