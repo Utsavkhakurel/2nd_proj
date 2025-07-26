@@ -1,14 +1,14 @@
 <?php
-session_start();
+//session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: ../../../public/auth/login.php');
-    exit();
-}
+//if (!isset($_SESSION['user_id'])) {
+   // header('Location: ../../../public/auth/login.php');
+    //exit();
+//}
 
 include '../../database/db-conn.php';
 
-$user_id = $_SESSION['user_id'];
+//$user_id = $_SESSION['user_id'];
 
 // Fetch user's bid history
 $query = "SELECT b.*, p.title, p.image_path, p.end_time, p.status, u.name AS seller_name

@@ -1,11 +1,11 @@
 <?php
-session_start();
-if(!isset($_SESSION['user_id']) || $_SESSION['user_role'] != 'admin'){
-    header("Location: ../../public/auth/login.php");
-    exit();
-}
+//session_start();
+//if(!isset($_SESSION['user_id']) || $_SESSION['user_role'] != 'admin'){
+   // header("Location: ../../public/auth/login.php");
+   // exit();
+//}
 
-include "../../database/db-conn.php";
+include __DIR__ . '/../database/db-conn.php';
 
 // Handle approval/rejection
 if(isset($_GET['approve']) || isset($_GET['reject'])){
@@ -35,8 +35,8 @@ $success = $_GET['success'] ?? '';
 <html>
 <head>
     <title>Listing Requests | NepBay</title>
-    <link rel="stylesheet" href="../../assets/main.css">
-    <link rel="stylesheet" href="../../assets/admin.css">
+    <link rel="stylesheet" href="/Nepbay/assets/main.css">
+    <link rel="stylesheet" href="/Nepbay/assets/admin.css">
 </head>
 <body>
     <div class="header">
