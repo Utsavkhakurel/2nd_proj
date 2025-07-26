@@ -1,18 +1,20 @@
-<?php
-session_start();
-if(isset($_SESSION['user_id'])){
-    header("Location: ../../client/client-dash.php");
-    exit();
-}
+//<?php
+//session_start();
+//if(isset($_SESSION['user_id'])) {
+  //  header("Location: ../client/client-dash.php");
+    //exit();
+//}
 
-$error = $_GET['error'] ?? '';
+//$error = $_GET['error'] ?? '';
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Login | NepBay</title>
-    <link rel="stylesheet" href="../../assets/main.css">
-    <link rel="stylesheet" href="../../assets/auth.css">
+    <link rel="stylesheet" href="/Nepbay/assets/main.css">
+    <link rel="stylesheet" href="/Nepbay/assets/auth.css">
+
 </head>
 <body>
     <div class="header">
